@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <MessageBird_SmsBridge>
+            <version>0.0.1</version>
+        </MessageBird_SmsBridge>
+    </modules>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <smsbridgeconfig translate="title">
+                                            <title>MessageBird SMS Order Notification Configuration</title>
+                                            <sort_order>100</sort_order>
+                                        </smsbridgeconfig>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <default>
+        <smsbridgeconfig>
+            <sendoncheckoutgroup>
+                <messagecustomer>Hi :firstname:! Thanks for your order #:orderid:.</messagecustomer>
+                <messageseller>A new order #:orderid: has been placed.</messageseller>
+            </sendoncheckoutgroup>
+            <sendonorderstatuschangegroup>
+                <statuschangedmessage>Hi :firstname:! The status of your order :orderid: has changed to :orderstatus:.</statuschangedmessage>
+                <statustoshippedmessage>Hi :firstname:! Your order is on your way.</statustoshippedmessage>
+            </sendonorderstatuschangegroup>
+        </smsbridgeconfig>
+    </default>
+
+    <global>
+        <models>
+            <messagebird_smsbridge>
+                <class>MessageBird_SmsBridge_Model</class>
+            </messagebird_smsbridge>
+            <smsbridge>
+                <class>MessageBird_SmsBridge_Model</class>
+            </smsbridge>
+        </models>
+
+        <helpers>
+            <smsbridge>
+                <class>MessageBird_SmsBridge_Helper</class>
+            </smsbridge>
+        </helpers>
+
+        <events>
+            <sales_order_place_after>
+                <observers>
+                    <messagebird_smsbridge_model_observer>
+                        <class>messagebird_smsbridge/observer</class>
+                        <type>singleton</type>
+                        <method>orderPlaced</method>
+                    </messagebird_smsbridge_model_observer>
+                </observers>
+            </sales_order_place_after>
+            <sales_order_save_after>
+                <observers>
+                    <messagebird_smsbridge_model_observer>
+                        <class>messagebird_smsbridge/observer</class>
+                        <type>singleton</type>
+                        <method>orderStatusChanged</method>
+                    </messagebird_smsbridge_model_observer>
+                </observers>
+            </sales_order_save_after>
+        </events>
+        <blocks>
+            <messagebird>
+                <class>MessageBird_SmsBridge_Block</class>
+            </messagebird>
+            <messagebird_smsbridge>
+                <class>MessageBird_SmsBridge_Block</class>
+            </messagebird_smsbridge>
+        </blocks>
+    </global>
+</config>
