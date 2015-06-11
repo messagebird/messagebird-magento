@@ -83,7 +83,8 @@ class MessageBird_SmsConnector_Model_Observer
             if($currentStatus != $originalStatus) {
                 //Only send sms when the status changes to one of the selected ones.
                 if(in_array($currentStatus, $this->statusesSelected)) {
-                    $customerPhone = $order->getShippingAddress()->getTelephone();
+                    $sAddress = $order->getShippingAddress();
+                    $customerPhone = $sAddress->getTelephone();
 
                     $bodyMessage = $this->_filterMessageVariables($order, $this->_getStatusChangedMessage($currentState));
 
