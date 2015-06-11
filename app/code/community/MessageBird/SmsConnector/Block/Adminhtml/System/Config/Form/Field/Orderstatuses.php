@@ -1,13 +1,13 @@
 <?php
-class MessageBird_SmsBridge_Block_Adminhtml_System_Config_Form_Field_Orderstatuses extends Mage_Adminhtml_Block_System_Config_Form_Field
+class MessageBird_SmsConnector_Block_Adminhtml_System_Config_Form_Field_Orderstatuses extends Mage_Adminhtml_Block_System_Config_Form_Field
 {
-    const CONFIG_PATH = 'smsbridgeconfig/sendonorderstatuschangegroup/orderstatuses';
+    const CONFIG_PATH = 'smsconnectorconfig/sendonorderstatuschangegroup/orderstatuses';
     protected $_values = null;
 
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate('messagebird_smsbridge/system/config/form/field/orderstatuses.phtml');
+        $this->setTemplate('messagebird_smsconnector/system/config/form/field/orderstatuses.phtml');
     }
 
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
@@ -21,7 +21,7 @@ class MessageBird_SmsBridge_Block_Adminhtml_System_Config_Form_Field_Orderstatus
     public function getValues()
     {
         $values = array();
-        foreach (Mage::getSingleton('smsbridge/orderstatuses')->toOptionArray() as $value) {
+        foreach (Mage::getSingleton('smsconnector/orderstatuses')->toOptionArray() as $value) {
             $values[$value['value']] = $value['label'];
         }
 

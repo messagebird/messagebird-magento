@@ -1,7 +1,7 @@
 <?php
 require_once(Mage::getBaseDir('lib').'/MessageBird/Client.php');
 
-class MessageBird_SmsBridge_Model_Observer
+class MessageBird_SmsConnector_Model_Observer
 {
     private $mbAccesskey;
     private $mbOriginator;
@@ -15,26 +15,26 @@ class MessageBird_SmsBridge_Model_Observer
     private $sendOnOrderStatusChanges;
     private $statusesSelected;
     private $statusChangedMessage;
-    private $statesNonDefaultMessage;
+    private $statesNonDefaultMessages;
 
     private $client;
 
     public function __construct()
     {
-        $this->mbAccesskey = Mage::getStoreConfig('smsbridgeconfig/messagebirdconfgroup/accesskey',Mage::app()->getStore());
-        $this->mbOriginator = Mage::getStoreConfig('smsbridgeconfig/messagebirdconfgroup/originator',Mage::app()->getStore());
-        $this->mbSellersPhones = explode(",",Mage::getStoreConfig('smsbridgeconfig/messagebirdconfgroup/sellernumber',Mage::app()->getStore()));
+        $this->mbAccesskey = Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/accesskey',Mage::app()->getStore());
+        $this->mbOriginator = Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/originator',Mage::app()->getStore());
+        $this->mbSellersPhones = explode(",",Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/sellernumber',Mage::app()->getStore()));
 
-        $this->sendOnOrderPlaced = Mage::getStoreConfig('smsbridgeconfig/sendoncheckoutgroup/enabled',Mage::app()->getStore());
-        $this->sendPlacedOrderTo = Mage::getStoreConfig('smsbridgeconfig/sendoncheckoutgroup/sendtobuyerowner',Mage::app()->getStore());
-        $this->customerMessage = Mage::getStoreConfig('smsbridgeconfig/sendoncheckoutgroup/messagecustomer',Mage::app()->getStore());
-        $this->sellerMessage = Mage::getStoreConfig('smsbridgeconfig/sendoncheckoutgroup/messageseller',Mage::app()->getStore());
+        $this->sendOnOrderPlaced = Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/enabled',Mage::app()->getStore());
+        $this->sendPlacedOrderTo = Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/sendtobuyerowner',Mage::app()->getStore());
+        $this->customerMessage = Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/messagecustomer',Mage::app()->getStore());
+        $this->sellerMessage = Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/messageseller',Mage::app()->getStore());
 
-        $this->sendOnOrderStatusChanges = Mage::getStoreConfig('smsbridgeconfig/sendonorderstatuschangegroup/enabled',Mage::app()->getStore());
-        $this->statusesSelected = explode(',', Mage::getStoreConfig('smsbridgeconfig/sendonorderstatuschangegroup/orderstatuses',Mage::app()->getStore()));
-        $this->statusChangedMessage =  Mage::getStoreConfig('smsbridgeconfig/sendonorderstatuschangegroup/statuschangedmessage',Mage::app()->getStore());
+        $this->sendOnOrderStatusChanges = Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/enabled',Mage::app()->getStore());
+        $this->statusesSelected = explode(',', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/orderstatuses',Mage::app()->getStore()));
+        $this->statusChangedMessage =  Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statuschangedmessage',Mage::app()->getStore());
         $this->statesNonDefaultMessages = array(
-            'processing'=>Mage::getStoreConfig('smsbridgeconfig/sendonorderstatuschangegroup/statustoshippedmessage',Mage::app()->getStore())
+            'processing'=>Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statustoshippedmessage',Mage::app()->getStore())
         );
 
         $this->client = new \MessageBird\Client($this->mbAccesskey);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <modules>
-        <MessageBird_SmsBridge>
+        <MessageBird_Smsconnector>
             <version>0.0.1</version>
-        </MessageBird_SmsBridge>
+        </MessageBird_Smsconnector>
     </modules>
 
     <adminhtml>
@@ -15,10 +15,10 @@
                             <children>
                                 <config>
                                     <children>
-                                        <smsbridgeconfig translate="title">
+                                        <smsconnectorconfig translate="title">
                                             <title>MessageBird SMS Order Notification Configuration</title>
                                             <sort_order>100</sort_order>
-                                        </smsbridgeconfig>
+                                        </smsconnectorconfig>
                                     </children>
                                 </config>
                             </children>
@@ -30,7 +30,7 @@
     </adminhtml>
 
     <default>
-        <smsbridgeconfig>
+        <smsconnectorconfig>
             <sendoncheckoutgroup>
                 <messagecustomer>Hi :firstname:! Thanks for your order #:orderid:.</messagecustomer>
                 <messageseller>A new order #:orderid: has been placed.</messageseller>
@@ -39,52 +39,52 @@
                 <statuschangedmessage>Hi :firstname:! The status of your order :orderid: has changed to :orderstatus:.</statuschangedmessage>
                 <statustoshippedmessage>Hi :firstname:! Your order is on your way.</statustoshippedmessage>
             </sendonorderstatuschangegroup>
-        </smsbridgeconfig>
+        </smsconnectorconfig>
     </default>
 
     <global>
         <models>
-            <messagebird_smsbridge>
-                <class>MessageBird_SmsBridge_Model</class>
-            </messagebird_smsbridge>
-            <smsbridge>
-                <class>MessageBird_SmsBridge_Model</class>
-            </smsbridge>
+            <messagebird_smsconnector>
+                <class>MessageBird_SmsConnector_Model</class>
+            </messagebird_smsconnector>
+            <smsconnector>
+                <class>MessageBird_SmsConnector_Model</class>
+            </smsconnector>
         </models>
 
         <helpers>
-            <smsbridge>
-                <class>MessageBird_SmsBridge_Helper</class>
-            </smsbridge>
+            <smsconnector>
+                <class>MessageBird_Smsconnector_Helper</class>
+            </smsconnector>
         </helpers>
 
         <events>
             <sales_order_place_after>
                 <observers>
-                    <messagebird_smsbridge_model_observer>
-                        <class>messagebird_smsbridge/observer</class>
+                    <messagebird_smsconnector_model_observer>
+                        <class>messagebird_smsconnector/observer</class>
                         <type>singleton</type>
                         <method>orderPlaced</method>
-                    </messagebird_smsbridge_model_observer>
+                    </messagebird_smsconnector_model_observer>
                 </observers>
             </sales_order_place_after>
             <sales_order_save_after>
                 <observers>
-                    <messagebird_smsbridge_model_observer>
-                        <class>messagebird_smsbridge/observer</class>
+                    <messagebird_smsconnector_model_observer>
+                        <class>messagebird_smsconnector/observer</class>
                         <type>singleton</type>
                         <method>orderStatusChanged</method>
-                    </messagebird_smsbridge_model_observer>
+                    </messagebird_smsconnector_model_observer>
                 </observers>
             </sales_order_save_after>
         </events>
         <blocks>
             <messagebird>
-                <class>MessageBird_SmsBridge_Block</class>
+                <class>MessageBird_SmsConnector_Block</class>
             </messagebird>
-            <messagebird_smsbridge>
-                <class>MessageBird_SmsBridge_Block</class>
-            </messagebird_smsbridge>
+            <messagebird_smsconnector>
+                <class>MessageBird_SmsConnector_Block</class>
+            </messagebird_smsconnector>
         </blocks>
     </global>
 </config>

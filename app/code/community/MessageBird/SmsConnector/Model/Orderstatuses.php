@@ -6,7 +6,7 @@
  * Time: 15:20
  */
 
-class MessageBird_SmsBridge_Model_Orderstatuses
+class MessageBird_SmsConnector_Model_Orderstatuses
 {
     public function toOptionArray()
     {
