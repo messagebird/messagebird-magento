@@ -19,6 +19,8 @@
                     <label>MessageBird Account Configuration</label>
                     <sort_order>10</sort_order>
                     <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <accesskey translate="label">
                             <label>Access Key</label>
@@ -26,6 +28,8 @@
                             <validate>required-entry</validate>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </accesskey>
                         <originator translate="label comment">
                             <label>Originator</label>
@@ -34,6 +38,8 @@
                             <validate>required-entry validate-length maximum-length-11</validate>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </originator>
                         <sellernumber translate="label comment">
                             <label>Seller's phone numbers</label>
@@ -41,6 +47,8 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </sellernumber>
                     </fields>
                 </messagebirdconfgroup>
@@ -48,6 +56,8 @@
                     <label>New order placed</label>
                     <sort_order>20</sort_order>
                     <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <enabled translated="label">
                             <label>Enabled</label>
@@ -55,6 +65,8 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </enabled>
                         <sendtobuyerowner translated="label">
                             <label>Send to</label>
@@ -62,6 +74,8 @@
                             <source_model>smsconnector/sendmessageto</source_model>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </sendtobuyerowner>
                         <messagecustomer translate="label comment">
                             <label>Message to Customer</label>
@@ -69,6 +83,8 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </messagecustomer>
                         <messageseller translate="label">
                             <label>Message to Seller</label>
@@ -76,6 +92,8 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </messageseller>
                     </fields>
                 </sendoncheckoutgroup>
@@ -83,6 +101,8 @@
                     <label>Order status changed</label>
                     <sort_order>30</sort_order>
                     <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <fields>
                         <enabled translated="label">
                             <label>Enabled</label>
@@ -90,12 +110,16 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </enabled>
                         <orderstatuses translated="label">
                             <label>Select Statuses</label>
                             <frontend_model>messagebird_smsconnector/adminhtml_system_config_form_field_orderstatuses</frontend_model>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </orderstatuses>
                         <statuschangedmessage translate="label">
                             <label>Default message for Status Changed</label>
@@ -103,6 +127,8 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </statuschangedmessage>
                         <statustoshippedmessage translate="label">
                             <label>Message for Order Shipped (Processing)</label>
@@ -110,6 +136,8 @@
                             <frontend_type>text</frontend_type>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </statustoshippedmessage>
                     </fields>
                 </sendonorderstatuschangegroup>

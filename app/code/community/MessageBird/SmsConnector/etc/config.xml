@@ -32,12 +32,12 @@
     <default>
         <smsconnectorconfig>
             <sendoncheckoutgroup>
-                <messagecustomer>Hi :firstname:! Thanks for your order #:orderid:.</messagecustomer>
-                <messageseller>A new order #:orderid: has been placed.</messageseller>
+                <messagecustomer>Hi :firstname:! Thank you for your order #:orderid:. We'll start with it right away!</messagecustomer>
+                <messageseller>Woohoo! A new order #:orderid: has been placed.</messageseller>
             </sendoncheckoutgroup>
             <sendonorderstatuschangegroup>
-                <statuschangedmessage>Hi :firstname:! The status of your order :orderid: has changed to :orderstatus:.</statuschangedmessage>
-                <statustoshippedmessage>Hi :firstname:! Your order is on your way.</statustoshippedmessage>
+                <statuschangedmessage>Hi :firstname:! Just to let you know: the status of your order :orderid: has changed to :orderstatus:.</statuschangedmessage>
+                <statustoshippedmessage>Hi :firstname:! Great news: your order is on the way.</statustoshippedmessage>
             </sendonorderstatuschangegroup>
         </smsconnectorconfig>
     </default>
