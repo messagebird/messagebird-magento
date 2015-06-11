@@ -54,7 +54,7 @@
 
         <helpers>
             <smsconnector>
-                <class>MessageBird_Smsconnector_Helper</class>
+                <class>MessageBird_SmsConnector_Helper</class>
             </smsconnector>
         </helpers>
 
