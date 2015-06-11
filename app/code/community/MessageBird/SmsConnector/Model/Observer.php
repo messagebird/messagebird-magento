@@ -46,8 +46,7 @@ class MessageBird_SmsConnector_Model_Observer
 
             $order = $observer->getEvent()->getOrder();
 
-            $sAddress = $order->getShippingAddress();
-            $customerPhone = $sAddress->getTelephone();
+            $customerPhones = $this->_getCustomerPhones($order);
 
             $customerBodyMessage = $this->_filterMessageVariables($order, $this->customerMessage);
             $sellerBodyMessage = $this->_filterMessageVariables($order, $this->sellerMessage);
@@ -55,13 +54,13 @@ class MessageBird_SmsConnector_Model_Observer
             //Adds appropiate recipients according to configuration
             switch($this->sendPlacedOrderTo) {
                 case "customer": //Customer
-                    $this->_sendSms($this->mbOriginator, array($customerPhone), $customerBodyMessage);
+                    $this->_sendSms($this->mbOriginator, $customerPhones, $customerBodyMessage);
                     break;
                 case "seller": //Seller
                     $this->_sendSms($this->mbOriginator, $this->mbSellersPhones, $sellerBodyMessage);
                     break;
                 case "customerseller": //Customer, Seller
-                    $this->_sendSms($this->mbOriginator, array($customerPhone), $customerBodyMessage);
+                    $this->_sendSms($this->mbOriginator, $customerPhones, $customerBodyMessage);
                     $this->_sendSms($this->mbOriginator, $this->mbSellersPhones, $sellerBodyMessage);
                     break;
                 default:
@@ -83,14 +82,11 @@ class MessageBird_SmsConnector_Model_Observer
             if($currentStatus != $originalStatus) {
                 //Only send sms when the status changes to one of the selected ones.
                 if(in_array($currentStatus, $this->statusesSelected)) {
-                    $sAddress = $order->getShippingAddress();
-                    $customerPhone = $sAddress->getTelephone();
+                    $customerPhones = $this->_getCustomerPhones($order);
 
                     $bodyMessage = $this->_filterMessageVariables($order, $this->_getStatusChangedMessage($currentState));
 
-                    $recipients = array($customerPhone);
-
-                    $this->_sendSms($this->mbOriginator, $recipients, $bodyMessage);
+                    $this->_sendSms($this->mbOriginator, $customerPhones, $bodyMessage);
                 }
             }
         }
@@ -138,5 +134,19 @@ class MessageBird_SmsConnector_Model_Observer
         }
 
         return $bodyMessage;
+    }
+
+    private function _getCustomerPhones($order)
+    {
+        $sAddress = $order->getShippingAddress();
+        $billingAddress = $order->getBillingAddress();
+
+
+        $customerPhones = array($sAddress->getTelephone());
+        if(!in_array($billingAddress->getTelephone(),$customerPhones)) {
+            $customerPhones[] = $billingAddress->getTelephone();
+        }
+
+        return $customerPhones;
     }
 }
