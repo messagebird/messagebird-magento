@@ -140,11 +140,18 @@ class MessageBird_SmsConnector_Model_Observer
     private function _getValidPhoneNumber($phone, $country)
     {
         $validPhone = preg_replace('/\D/', '',$phone);
-        $validPhone = ltrim($validPhone,'0');
+
+        //Trim first 00 if number starts with 00 (e.g. 0031...)
+        if(substr($validPhone,0,2) === "00") {
+            $validPhone = ltrim($validPhone,'00');
+        } else {
+            $validPhone = ltrim($validPhone,'0');
+        }
+
         $countryCallingCode = $this->_getCountryCallingCode($country);
 
         if($countryCallingCode != 0) {
-            if ($this->_phoneHasCountryCallingCode($validPhone)) {
+            if ($this->_phoneHasCountryCallingCode($validPhone, $countryCallingCode)) {
                 $validPhone = "+".$validPhone;
             } else {
                 $validPhone = "+".$countryCallingCode.$validPhone;
