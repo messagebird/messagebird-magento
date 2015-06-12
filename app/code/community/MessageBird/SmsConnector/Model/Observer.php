@@ -1,69 +1,51 @@
 <?php
-require_once(Mage::getBaseDir('lib').'/MessageBird/Client.php');
+require_once Mage::getBaseDir('lib').'/MessageBird/Client.php';
+
+define('MBACCESSKEY', Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/accesskey',Mage::app()->getStore()));
+define('MBORIGINATOR', Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/originator',Mage::app()->getStore()));
+define('MBSELLERSPHONES', serialize(explode(",",Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/sellernumber',Mage::app()->getStore()))));
+
+define('ISSENDONORDERPLACED', Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/enabled',Mage::app()->getStore()));
+define('SENDORDERPLACEDTO', Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/sendtobuyerowner',Mage::app()->getStore()));
+define('CUSTOMERMESSAGE', Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/messagecustomer',Mage::app()->getStore()));
+define('SELLERMESSAGE', Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/messageseller',Mage::app()->getStore()));
+
+define('ISSENDONORDERSTATUSCHANGES', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/enabled',Mage::app()->getStore()));
+define('STATUSESSELECTED', serialize(explode(',', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/orderstatuses',Mage::app()->getStore()))));
+define('STATUSCHANGEDMESSAGE', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statuschangedmessage',Mage::app()->getStore()));
+define('STATESNONDEFAULTMESSAGES', serialize(array(
+        'processing'=>Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statustoshippedmessage',Mage::app()->getStore())
+        )));
 
 class MessageBird_SmsConnector_Model_Observer
 {
-    private $mbAccesskey;
-    private $mbOriginator;
-    private $mbSellersPhones;
-
-    private $sendOnOrderPlaced;
-    private $sendPlacedOrderTo;
-    private $customerMessage;
-    private $sellerMessage;
-
-    private $sendOnOrderStatusChanges;
-    private $statusesSelected;
-    private $statusChangedMessage;
-    private $statesNonDefaultMessages;
-
-    private $client;
-
-    public function __construct()
-    {
-        $this->mbAccesskey = Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/accesskey',Mage::app()->getStore());
-        $this->mbOriginator = Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/originator',Mage::app()->getStore());
-        $this->mbSellersPhones = explode(",",Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/sellernumber',Mage::app()->getStore()));
-
-        $this->sendOnOrderPlaced = Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/enabled',Mage::app()->getStore());
-        $this->sendPlacedOrderTo = Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/sendtobuyerowner',Mage::app()->getStore());
-        $this->customerMessage = Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/messagecustomer',Mage::app()->getStore());
-        $this->sellerMessage = Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutgroup/messageseller',Mage::app()->getStore());
-
-        $this->sendOnOrderStatusChanges = Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/enabled',Mage::app()->getStore());
-        $this->statusesSelected = explode(',', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/orderstatuses',Mage::app()->getStore()));
-        $this->statusChangedMessage =  Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statuschangedmessage',Mage::app()->getStore());
-        $this->statesNonDefaultMessages = array(
-            'processing'=>Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statustoshippedmessage',Mage::app()->getStore())
-        );
-
-        $this->client = new \MessageBird\Client($this->mbAccesskey);
-    }
-
     public function orderPlaced(Varien_Event_Observer $observer)
     {
-        if($this->sendOnOrderPlaced) {
+        if(ISSENDONORDERPLACED) {
 
             $order = $observer->getEvent()->getOrder();
 
             $customerPhones = $this->_getCustomerPhones($order);
 
-            $customerBodyMessage = $this->_filterMessageVariables($order, $this->customerMessage);
-            $sellerBodyMessage = $this->_filterMessageVariables($order, $this->sellerMessage);
+            $customerBodyMessage = $this->_filterMessageVariables($order, CUSTOMERMESSAGE);
+            $sellerBodyMessage = $this->_filterMessageVariables($order, SELLERMESSAGE);
+            $mbSellersPhones = unserialize(MBSELLERSPHONES);
 
             //Adds appropiate recipients according to configuration
-            switch($this->sendPlacedOrderTo) {
+            switch(SENDORDERPLACEDTO) {
                 case "customer": //Customer
-                    $this->_sendSms($this->mbOriginator, $customerPhones, $customerBodyMessage);
+                    $this->_sendSms(MBORIGINATOR, $customerPhones, $customerBodyMessage);
                     break;
                 case "seller": //Seller
-                    $this->_sendSms($this->mbOriginator, $this->mbSellersPhones, $sellerBodyMessage);
+                    $this->_sendSms(MBORIGINATOR, $mbSellersPhones, $sellerBodyMessage);
                     break;
                 case "customerseller": //Customer, Seller
-                    $this->_sendSms($this->mbOriginator, $customerPhones, $customerBodyMessage);
-                    $this->_sendSms($this->mbOriginator, $this->mbSellersPhones, $sellerBodyMessage);
+                    $this->_sendSms(MBORIGINATOR, $customerPhones, $customerBodyMessage);
+                    $this->_sendSms(MBORIGINATOR, $mbSellersPhones, $sellerBodyMessage);
                     break;
                 default:
+                    $this->_sendSms(MBORIGINATOR, $customerPhones, $customerBodyMessage);
+                    $this->_sendSms(MBORIGINATOR, $mbSellersPhones , $sellerBodyMessage);
                     break;
             }
 
@@ -72,21 +54,22 @@ class MessageBird_SmsConnector_Model_Observer
 
     public function orderStatusChanged(Varien_Event_Observer $observer)
     {
-        if($this->sendOnOrderStatusChanges) {
+        if(ISSENDONORDERSTATUSCHANGES) {
             $order = $observer->getEvent()->getOrder();
             $currentStatus = $order->getStatus();
             $currentState = $order->getState();
             $originalStatus = $order->getOrigData('status');
+            $statusesSelected = unserialize(STATUSESSELECTED);
 
             //Status changed
             if($currentStatus != $originalStatus) {
                 //Only send sms when the status changes to one of the selected ones.
-                if(in_array($currentStatus, $this->statusesSelected)) {
+                if(in_array($currentStatus, $statusesSelected)) {
                     $customerPhones = $this->_getCustomerPhones($order);
 
                     $bodyMessage = $this->_filterMessageVariables($order, $this->_getStatusChangedMessage($currentState));
 
-                    $this->_sendSms($this->mbOriginator, $customerPhones, $bodyMessage);
+                    $this->_sendSms(MBORIGINATOR, $customerPhones, $bodyMessage);
                 }
             }
         }
@@ -94,13 +77,14 @@ class MessageBird_SmsConnector_Model_Observer
 
     private function _sendSms($originator, $recipients, $bodyMessage)
     {
+        $client = new \MessageBird\Client(MBACCESSKEY);
         $Message = new \MessageBird\Objects\Message();
         $Message->originator = $originator;
         $Message->recipients = $recipients;
         $Message->body = $bodyMessage;
 
         try {
-            $response = $this->client->messages->create($Message);
+            $response = $client->messages->create($Message);
             return $response;
 
         } catch (Exception $e) {
@@ -126,11 +110,12 @@ class MessageBird_SmsConnector_Model_Observer
 
     private function _getStatusChangedMessage($currentState)
     {
-        $bodyMessage = $this->statusChangedMessage;
+        $bodyMessage = STATUSCHANGEDMESSAGE;
+        $statesNonDefaultMessages = unserialize(STATESNONDEFAULTMESSAGES);
 
         //If the new state needs a non-default message
-        if(isset($this->statesNonDefaultMessages[$currentState])) {
-            $bodyMessage = $this->statesNonDefaultMessages[$currentState];
+        if(isset($statesNonDefaultMessages[$currentState])) {
+            $bodyMessage = $statesNonDefaultMessages[$currentState];
         }
 
         return $bodyMessage;
@@ -140,7 +125,6 @@ class MessageBird_SmsConnector_Model_Observer
     {
         $sAddress = $order->getShippingAddress();
         $billingAddress = $order->getBillingAddress();
-
 
         $customerPhones = array($sAddress->getTelephone());
         if(!in_array($billingAddress->getTelephone(),$customerPhones)) {
