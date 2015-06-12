@@ -404,7 +404,7 @@ class MessageBird_SmsConnector_Model_Observer
         $countries['ZM'] = 260;
         $countries['ZW'] = 263;
 
-        return (isset($countries[$country])) ? $countries[$country]: 0 ;
+        return (isset($countries[$country])) ? ''.$countries[$country]: 0 ;
     }
 
     private function _getTrackingInfo($order)
