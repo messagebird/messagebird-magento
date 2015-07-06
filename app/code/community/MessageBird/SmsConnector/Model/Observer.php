@@ -1,6 +1,8 @@
 <?php
 require_once Mage::getBaseDir('lib').'/MessageBird/Client.php';
 
+define('TIMEZONE', Mage::getStoreConfig('general/locale/timezone',Mage::app()->getStore()));
+
 define('MBACCESSKEY', Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/accesskey',Mage::app()->getStore()));
 define('MBORIGINATOR', Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/originator',Mage::app()->getStore()));
 define('MBSELLERSPHONES', serialize(explode(",",Mage::getStoreConfig('smsconnectorconfig/messagebirdconfgroup/sellernumber',Mage::app()->getStore()))));
@@ -13,9 +15,12 @@ define('SELLERMESSAGE', Mage::getStoreConfig('smsconnectorconfig/sendoncheckoutg
 define('ISSENDONORDERSTATUSCHANGES', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/enabled',Mage::app()->getStore()));
 define('STATUSESSELECTED', serialize(explode(',', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/orderstatuses',Mage::app()->getStore()))));
 define('STATUSCHANGEDMESSAGE', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statuschangedmessage',Mage::app()->getStore()));
+define('SCHEDULESHIPPEDMESSAGE', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/scheduleshippedmessage',Mage::app()->getStore()));
+define('SCHEDULESHIPPEDMESSAGETIME', Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statustoshippedmessageschedule',Mage::app()->getStore()));
 define('STATESNONDEFAULTMESSAGES', serialize(array(
         'processing'=>Mage::getStoreConfig('smsconnectorconfig/sendonorderstatuschangegroup/statustoshippedmessage',Mage::app()->getStore())
         )));
+
 
 class MessageBird_SmsConnector_Model_Observer
 {
@@ -68,20 +73,32 @@ class MessageBird_SmsConnector_Model_Observer
                     $customerPhones = $this->_getCustomerPhones($order);
 
                     $bodyMessage = $this->_filterMessageVariables($order, $this->_getStatusChangedMessage($currentState));
+                    $messageScheduledTime = null;
 
-                    $this->_sendSms(MBORIGINATOR, $customerPhones, $bodyMessage);
+                    if($currentState == 'processing') {
+                        IF(SCHEDULESHIPPEDMESSAGE) {
+                            $scheduledDateTime = $this->_getScheduleDateTime(SCHEDULESHIPPEDMESSAGETIME);
+                            $messageScheduledTime = $scheduledDateTime->format('Y-m-d\TH:i:sP');
+                        }
+                    }
+
+                    $this->_sendSms(MBORIGINATOR, $customerPhones, $bodyMessage, $messageScheduledTime);
                 }
             }
         }
     }
 
-    private function _sendSms($originator, $recipients, $bodyMessage)
+    private function _sendSms($originator, $recipients, $bodyMessage, $messageScheduledTime = null)
     {
         $client = new \MessageBird\Client(MBACCESSKEY);
         $Message = new \MessageBird\Objects\Message();
         $Message->originator = $originator;
         $Message->recipients = $recipients;
         $Message->body = $bodyMessage;
+
+        if($messageScheduledTime) {
+            $Message->scheduledDatetime = $messageScheduledTime;
+        }
 
         try {
             $response = $client->messages->create($Message);
@@ -426,5 +443,20 @@ class MessageBird_SmsConnector_Model_Observer
         }
 
         return $trackInfo;
+    }
+
+    private function _getScheduleDateTime($time) {
+        $timeArray = explode(',',$time);
+
+        $dateTime = new DateTime('now', new DateTimeZone(TIMEZONE));
+        $dateTime->setTime($timeArray[0], $timeArray[1], $timeArray[2]);
+
+        $now = new DateTime('now', new DateTimeZone(TIMEZONE));
+
+        if($now > $dateTime) {
+            $dateTime->modify('+1 day');
+        }
+
+        return $dateTime;
     }
 }
