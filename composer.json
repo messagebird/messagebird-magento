@@ -1,0 +1,16 @@
+{
+  "name": "messagebird/messagebird-magento",
+  "type": "magento-module",
+  "license": "OSL-3.0",
+  "homepage": "https://github.com/messagebird/messagebird-magento",
+  "description": "Magento extension to allow shop owners to keep their users informed about their orders using the power of MessageBird's SMS platform.",
+  "authors": [
+    {
+      "name": "Luis Gomez",
+      "email": "luis@messagebird.com"
+    }
+  ],
+  "require": {
+    "magento-hackathon/magento-composer-installer":"*"
+  }
+}
