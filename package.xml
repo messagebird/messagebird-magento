@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package>
     <name>messagebird-magento</name>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <stability>devel</stability>
     <license>BSD-2</license>
     <channel>community</channel>
     <extends/>
     <summary>Magento Messagebird extension</summary>
     <description>Magento Messagebird extension</description>
-    <notes>-Added support for scheduling shipped message.</notes>
+    <notes>-Versioning and composer installation.</notes>
     <authors><author><name>luis</name><user>luisgomez</user><email>luis@messagebird.com</email></author></authors>
     <date>2015-07-13</date>
     <time>09:39:34</time>

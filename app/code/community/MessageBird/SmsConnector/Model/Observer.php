@@ -92,12 +92,13 @@ class MessageBird_SmsConnector_Model_Observer
     {
         $client = new \MessageBird\Client(MBACCESSKEY);
         $extensionVersion = Mage::getConfig()->getNode()->modules->MessageBird_SmsConnector->version;
+        $magentoVersion = Mage::getVersion();
 
         $Message = new \MessageBird\Objects\Message();
         $Message->originator = $originator;
         $Message->recipients = $recipients;
         $Message->body = $bodyMessage;
-        $Message->reference = 'Magento/' . $extensionVersion;
+        $Message->reference = 'MessageBird/Magento/' . $extensionVersion . ' Magento/' . $magentoVersion;
 
         if($messageScheduledTime) {
             $Message->scheduledDatetime = $messageScheduledTime;
