@@ -9,8 +9,5 @@
       "name": "MessageBird",
       "email": "support@messagebird.com"
     }
-  ],
-  "require": {
-    "magento-hackathon/magento-composer-installer":"*"
-  }
+  ]
 }
