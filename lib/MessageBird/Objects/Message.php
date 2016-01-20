@@ -89,7 +89,7 @@ class Message extends Base
     public $gateway;
 
     /**
-     * A hash with extra information. Is only used when a binary or premium
+     * An associative array with extra information. Is only used when a binary or premium
      * message is sent.
      *
      * @var array
@@ -180,6 +180,26 @@ class Message extends Base
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get the created href
+     *
+     * @return string
+     */
+    public function getHref()
+    {
+        return $this->href;
+    }
+
+    /**
+     * Get the $createdDatetime value
+     *
+     * @return string
+     */
+    public function getCreatedDatetime()
+    {
+        return $this->createdDatetime;
     }
 
     /**

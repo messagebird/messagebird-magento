@@ -2,8 +2,6 @@
 
 namespace MessageBird;
 
-require_once "autoload.php";
-
 /**
  * Class Client
  *
@@ -14,7 +12,7 @@ class Client
 
     const ENDPOINT = 'https://rest.messagebird.com';
 
-    const CLIENT_VERSION = '1.1.8';
+    const CLIENT_VERSION = '1.3.1';
 
     /**
      * @var string
@@ -37,9 +35,9 @@ class Client
     public $hlr;
 
     /**
-     * @var Resources\Otp
+     * @var Resources\Verify
      */
-    public $otp;
+    public $verify;
 
     /**
      * @var Resources\Balance
@@ -47,17 +45,31 @@ class Client
     public $balance;
 
     /**
+     * @var Resources\Lookup
+     */
+    public $lookup;
+
+    /**
+     * @var Resources\LookupHlr
+     */
+    public $lookupHlr;
+
+    /**
      * @var Common\HttpClient
      */
     protected $HttpClient;
 
-
     /**
-     * @param $accessKey
+     * @param string            $accessKey
+     * @param Common\HttpClient $httpClient
      */
-    public function __construct($accessKey = null)
+    public function __construct($accessKey = null, Common\HttpClient $httpClient = null)
     {
-        $this->HttpClient = new Common\HttpClient(self::ENDPOINT);
+        if ($httpClient == null) {
+            $this->HttpClient = new Common\HttpClient(self::ENDPOINT);
+        } else {
+            $this->HttpClient = $httpClient;
+        }
         $this->HttpClient->addUserAgentString('MessageBird/ApiClient/' . self::CLIENT_VERSION);
         $this->HttpClient->addUserAgentString($this->getPhpVersion());
 
@@ -65,11 +77,13 @@ class Client
             $this->setAccessKey($accessKey);
         }
 
-        $this->messages = new Resources\Messages($this->HttpClient);
-        $this->hlr      = new Resources\Hlr($this->HttpClient);
-        $this->otp      = new Resources\Otp($this->HttpClient);
-        $this->balance  = new Resources\Balance($this->HttpClient);
-        $this->voicemessages      = new Resources\VoiceMessage($this->HttpClient);
+        $this->messages      = new Resources\Messages($this->HttpClient);
+        $this->hlr           = new Resources\Hlr($this->HttpClient);
+        $this->verify        = new Resources\Verify($this->HttpClient);
+        $this->balance       = new Resources\Balance($this->HttpClient);
+        $this->voicemessages = new Resources\VoiceMessage($this->HttpClient);
+        $this->lookup        = new Resources\Lookup($this->HttpClient);
+        $this->lookupHlr     = new Resources\LookupHlr($this->HttpClient);
     }
 
     /**
@@ -81,6 +95,9 @@ class Client
         $this->HttpClient->setAuthentication($Authentication);
     }
 
+    /**
+     * @return string
+     */
     private function getPhpVersion()
     {
         if (!defined('PHP_VERSION_ID')) {
