@@ -17,6 +17,10 @@
             <groups>
                 <messagebirdconfgroup translate="label">
                     <label>MessageBird Account Configuration</label>
+                    <comment><![CDATA[<h4>MessageBird</h4>
+                    <p>Telecom is switching from hardware to software and we are at the forefront of this change. Our SMS API connects you to 7 billion phones worldwide.</p>
+                    <p>Make sure to enable balance warnings and, optionally, auto ordering <a href="https://www.messagebird.com/app/en/finance/settings" target="_blank">here</a> to make sure you’ll never be surprised by an empty balance.</p>
+                    <p>Go to <a href="https://www.messagebird.com/app/" target="_blank">www.messagebird.com/app/</a> to purchase credit and see live statistics.<br/>See <a href="https://www.messagebird.com/developers/" target="_blank">www.messagebird.com/developers/</a> for the API documentation.</p>]]></comment>
                     <sort_order>10</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
@@ -24,6 +28,7 @@
                     <fields>
                         <accesskey translate="label">
                             <label>Access Key</label>
+                            <comment><![CDATA[This information can be found within your MessageBird account on the <a href="https://www.messagebird.com/app/en/settings/developers/access" target="_blank">Developer Access page</a>.]]></comment>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
                             <sort_order>10</sort_order>
