@@ -1,18 +1,42 @@
 <?xml version="1.0"?>
 <package>
     <name>messagebird-magento</name>
-    <version>0.0.3</version>
-    <stability>devel</stability>
+    <version>1.0.0</version>
+    <stability>stable</stability>
     <license>BSD-2</license>
     <channel>community</channel>
     <extends/>
-    <summary>Magento Messagebird extension</summary>
-    <description>Magento Messagebird extension</description>
-    <notes>-Versioning and composer installation.</notes>
-    <authors><author><name>luis</name><user>luisgomez</user><email>luis@messagebird.com</email></author></authors>
-    <date>2015-07-13</date>
-    <time>09:39:34</time>
-    <contents><target name="magecommunity"><dir name="MessageBird"><dir><dir name="SmsConnector"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><dir name="Form"><dir name="Field"><file name="Orderstatuses.php" hash="393fa11bbad7cf809fe3519b0e323e17"/></dir></dir></dir></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="394c37b0e0e792e79de6af08e12b6521"/></dir><dir name="Model"><file name="Observer.php" hash="a98aefe0816761fc867c609dfbb3067e"/><file name="Orderstatuses.php" hash="8d1d1c589254131d36feb20fd75ead53"/><file name="Sendmessageto.php" hash="68dd6b2d8d424b9f5f2f1301182f350a"/></dir><dir name="etc"><file name="config.xml" hash="ae6a85e0df3cbecb0e5b94166013a4ab"/><file name="system.xml" hash="fa2f6e3876f5fa21b4152156ab20ae0f"/></dir></dir></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="template"><dir name="messagebird_smsconnector"><dir name="system"><dir name="config"><dir name="form"><dir name="field"><file name="orderstatuses.phtml" hash="80fc982ae1ffbfdeddda360f5ab6e6b8"/><file name=".DS_Store" hash="ce558f0c8c023c18d04ab0045cf6fe9a"/></dir><file name=".DS_Store" hash="15055ab5d1d6da13d1026f7fca84c16f"/></dir><file name=".DS_Store" hash="d36fe1cf52428266a9b0aaa0a82acda8"/></dir><file name=".DS_Store" hash="adbec34ae782d05faf515b4f7e5723d0"/></dir><file name=".DS_Store" hash="b5f4e683a7570b439fca1fc8925ee8aa"/></dir></dir></dir></dir></dir></target><target name="magelib"><dir name="MessageBird"><file name="Client.php" hash="91864cf197bea29f3ae06864b5c574af"/><dir><dir name="Common"><file name="Authentication.php" hash="17cad0ba9897e4c438997369d101226a"/><file name="HttpClient.php" hash="a432db503282ebdc722f2c04e1c164a5"/><file name="ResponseError.php" hash="cdc3b13edf3addd8d12f450d3dafb190"/></dir><dir name="Exceptions"><file name="AuthenticateException.php" hash="f4e08e9e26beb378d52e5e2dd88a4f68"/><file name="BalanceException.php" hash="23ca8d61bfc1aa5728ab59196ccf0f4d"/><file name="HttpException.php" hash="be5e9a8de66541a5d5000d6ee6c02e9a"/><file name="MessageBirdException.php" hash="f185609044f0fda6af53934fb2083383"/><file name="RequestException.php" hash="a819061cb1ff7861782a802e32e949af"/><file name="ServerException.php" hash="b7ba55cb2e725e8b3a8088e5c34cd657"/></dir><dir name="Objects"><file name="Balance.php" hash="0c48120095b983191cf47dfaa2543310"/><file name="Base.php" hash="20a6fb98a5d45c617bcd08f19155038e"/><file name="BaseList.php" hash="02ff5961f171c0579237eae2d80dd52e"/><file name="Hlr.php" hash="ed11316c8423d669d0764e23ffe1b018"/><file name="Message.php" hash="f3c80b7513db4721906997ef5d7745b2"/><file name="Otp.php" hash="fc5cd24e02ed7b62c3e0c3a7b49e9011"/><file name="Recipient.php" hash="5b44bd001a599d884f0d0c65a758d46e"/><file name="VoiceMessage.php" hash="1c649e5e70140b697c016f657f4d035e"/></dir><dir name="Resources"><file name="Balance.php" hash="d751876e225ea5bb8e939b3e49858a5c"/><file name="Base.php" hash="80207e5b83b2fed188b5dd37c7fd5a54"/><file name="Hlr.php" hash="a286111658d3559e01944230fdcb7adb"/><file name="Messages.php" hash="900df9b9f92e8db966e358cf9cc46c67"/><file name="Otp.php" hash="1400fc5a16718a6fbd02fba74d8ee140"/><file name="VoiceMessage.php" hash="774bc57543bb0b8cdd6ee48bf4fcf96e"/></dir></dir><file name="autoload.php" hash="972f263f2ef6637310ef5aca977c8687"/></dir></target><target name="mageetc"><dir name="modules"><file name="MessageBird_SmsConnector.xml" hash="511cb2af6ffb295b83d802563f5828b6"/></dir></target></contents>
+    <summary>Use the power of SMS to increase customer happiness. Update customers on new orders, changes and shipments.</summary>
+    <description>&lt;p&gt;MessageBird SMS is a powerful Magento module that lets shop owners send SMS messages to customers automatically. The module allows easy configuration what and when to send to customers. &lt;/p&gt;&#xD;
+&#xD;
+&lt;p&gt;With an open rate of 95% - and email only being 30% - SMS is the ideal solution to keep customers up-to-date and improve their overall experience with your online shop. By doing so you increase customer happiness, which means you increase your recurring revenue.&lt;/p&gt;&#xD;
+&#xD;
+&lt;h3&gt;Features&lt;/h3&gt;&#xD;
+&lt;br /&gt;&#xD;
+&lt;ul&gt;&#xD;
+&lt;li&gt;Send custom SMS messages on order placement to customer, seller or both.&lt;/li&gt;&#xD;
+&lt;li&gt;Send automatic SMS messages on status changes. For example: letting your customers know when their order is shipped.&lt;/li&gt;&#xD;
+&lt;li&gt;Use variables to personalise and customize SMS messages. For example: &#x201C;Hi :firstname:! Thank you for your order #:orderid:. We'll start with it right away!&#x201D;&lt;/li&gt;&#xD;
+&lt;li&gt;In many countries you can use your own sender ID like &#x201C;PizzaPalace&#x201D; or &#x201C;ShirtDirect&#x201D;.&lt;/li&gt;&#xD;
+&lt;li&gt;You can schedule your SMS messages so customers don&#x2019;t receive messages at unusual times.&lt;/li&gt;&#xD;
+&lt;li&gt;Get live statistics on who received the messages and when, from our MessageBird dashboard.&lt;/li&gt;&#xD;
+&lt;/ul&gt;&#xD;
+&#xD;
+&lt;h3&gt;Pricing&lt;/h3&gt;&#xD;
+&#xD;
+&lt;p&gt;No setup fees. No monthly fees, just pay as you go. Exact pricing can be found over at &lt;a href="https://www.messagebird.com/en/pricing"&gt;www.messagebird.com/en/pricing&lt;/a&gt;.&lt;/p&gt;&#xD;
+&#xD;
+&lt;h3&gt;Support&lt;/h3&gt;&#xD;
+&#xD;
+&lt;p&gt;Question or ideas how we can improve? Let us know at &lt;a href="mailto:support@messagebird.com"&gt;support@messagebird.com&lt;/a&gt;. We&#x2019;re here to help!&lt;/p&gt;&#xD;
+&#xD;
+&lt;p&gt;Learn more about MessageBird and our services at &lt;a href="https://www.messagebird.com"&gt;www.messagebird.com&lt;/a&gt;.&#xD;
+More information on our API can be found at &lt;a href="https://www.messagebird.com/developers"&gt;www.messagebird.com/developers&lt;/a&gt;.&lt;/p&gt;</description>
+    <notes>- Text updates</notes>
+    <authors><author><name>MessageBird</name><user>messagebird</user><email>support@messagebird.com</email></author></authors>
+    <date>2016-01-20</date>
+    <time>12:35:59</time>
+    <contents><target name="magecommunity"><dir name="MessageBird"><dir><dir name="SmsConnector"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><dir name="Form"><dir name="Field"><file name="Orderstatuses.php" hash="393fa11bbad7cf809fe3519b0e323e17"/></dir></dir></dir></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="394c37b0e0e792e79de6af08e12b6521"/></dir><dir name="Model"><file name="Observer.php" hash="e229b92b03d82703731c1018d7a4ad23"/><file name="Orderstatuses.php" hash="8d1d1c589254131d36feb20fd75ead53"/><file name="Sendmessageto.php" hash="68dd6b2d8d424b9f5f2f1301182f350a"/></dir><dir name="etc"><file name="config.xml" hash="51a25f440c4b7cd21d9100b4ce9d7c5f"/><file name="system.xml" hash="6233fe976434d18de6406821d15889dc"/></dir></dir></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="template"><dir name="messagebird_smsconnector"><dir name="system"><dir name="config"><dir name="form"><dir name="field"><file name="orderstatuses.phtml" hash="80fc982ae1ffbfdeddda360f5ab6e6b8"/></dir></dir></dir></dir></dir></dir></dir></dir></dir></target><target name="magelib"><dir name="MessageBird"><file name="Client.php" hash="91864cf197bea29f3ae06864b5c574af"/><dir><dir name="Common"><file name="Authentication.php" hash="17cad0ba9897e4c438997369d101226a"/><file name="HttpClient.php" hash="a432db503282ebdc722f2c04e1c164a5"/><file name="ResponseError.php" hash="cdc3b13edf3addd8d12f450d3dafb190"/></dir><dir name="Exceptions"><file name="AuthenticateException.php" hash="f4e08e9e26beb378d52e5e2dd88a4f68"/><file name="BalanceException.php" hash="23ca8d61bfc1aa5728ab59196ccf0f4d"/><file name="HttpException.php" hash="be5e9a8de66541a5d5000d6ee6c02e9a"/><file name="MessageBirdException.php" hash="f185609044f0fda6af53934fb2083383"/><file name="RequestException.php" hash="a819061cb1ff7861782a802e32e949af"/><file name="ServerException.php" hash="b7ba55cb2e725e8b3a8088e5c34cd657"/></dir><dir name="Objects"><file name="Balance.php" hash="0c48120095b983191cf47dfaa2543310"/><file name="Base.php" hash="20a6fb98a5d45c617bcd08f19155038e"/><file name="BaseList.php" hash="02ff5961f171c0579237eae2d80dd52e"/><file name="Hlr.php" hash="ed11316c8423d669d0764e23ffe1b018"/><file name="Message.php" hash="f3c80b7513db4721906997ef5d7745b2"/><file name="Otp.php" hash="fc5cd24e02ed7b62c3e0c3a7b49e9011"/><file name="Recipient.php" hash="5b44bd001a599d884f0d0c65a758d46e"/><file name="VoiceMessage.php" hash="1c649e5e70140b697c016f657f4d035e"/></dir><dir name="Resources"><file name="Balance.php" hash="d751876e225ea5bb8e939b3e49858a5c"/><file name="Base.php" hash="80207e5b83b2fed188b5dd37c7fd5a54"/><file name="Hlr.php" hash="a286111658d3559e01944230fdcb7adb"/><file name="Messages.php" hash="900df9b9f92e8db966e358cf9cc46c67"/><file name="Otp.php" hash="1400fc5a16718a6fbd02fba74d8ee140"/><file name="VoiceMessage.php" hash="774bc57543bb0b8cdd6ee48bf4fcf96e"/></dir></dir><file name="autoload.php" hash="972f263f2ef6637310ef5aca977c8687"/></dir></target><target name="mageetc"><dir name="modules"><file name="MessageBird_SmsConnector.xml" hash="511cb2af6ffb295b83d802563f5828b6"/></dir></target></contents>
     <compatible/>
-    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+    <dependencies><required><php><min>5.2.0</min><max>7.0.2</max></php></required></dependencies>
 </package>
