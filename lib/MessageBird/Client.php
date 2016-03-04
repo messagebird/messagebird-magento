@@ -3,6 +3,23 @@
 namespace MessageBird;
 
 /**
+ * Thomas Kerkhof @ Notive, 25-Feb-2015:
+ * Autoloader for unregistered functions within this namespace.
+ * Include once is executed twice for windows and unix system compatibility
+ */
+spl_autoload_register(
+    function ($class_name)
+    {
+        // error_log('loading in '.__NAMESPACE__.': '.$class_name);
+        $file = $class_name . '.php';
+        $file = preg_replace('/'.__NAMESPACE__.'\\\\/', '', $file);
+        include_once $file;
+        $file = preg_replace('/\\\\/', '/', $file);
+        include_once $file;
+    }
+);
+
+/**
  * Class Client
  *
  * @package MessageBird
