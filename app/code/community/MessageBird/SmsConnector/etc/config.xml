@@ -2,7 +2,7 @@
 <config>
     <modules>
         <MessageBird_SmsConnector>
-            <version>1.0.0</version>
+            <version>1.0.3</version>
         </MessageBird_SmsConnector>
     </modules>
 
