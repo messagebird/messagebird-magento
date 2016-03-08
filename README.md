@@ -2,7 +2,7 @@
 
 The purpose of this extension is to allow Magento Shop owners to keep their users informed about their orders using the power of MessageBird's SMS platform.
 
-Currently this extension is **under development** and only two events are supported.
+This extension currently supports two events:
 
 1. Send an SMS message when a new order is placed to either Customer, Seller or to both
 2. Send an SMS to the customer when the status of the order has changed.
